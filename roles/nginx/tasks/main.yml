@@ -1,0 +1,14 @@
+- name: install nginx
+  package:
+    name: 'nginx'
+    state: 'installed'
+
+- name: general nginx conf
+  template: dest=/etc/nginx/nginx.conf group=root mode=0644 owner=root src=nginx.conf.j2
+  tags: fpm
+  notify: NGINX
+
+- name: site nginx conf
+  template: dest=/etc/nginx/conf.d/personal-site-nginx.conf group=root mode=0644 owner=root src=personal-site-nginx.conf.j2
+  tags: fpm
+  notify: NGINX

@@ -1,0 +1,9 @@
+- name: Copy nodesource RPM signing key into place
+  copy: src=NODESOURCE-GPG-SIGNING-KEY-EL
+      dest=/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL
+      owner=root group=root mode=0644
+
+- name: Install nodesource yum configuration file
+  template: src=nodesource-el-6.repo.j2
+          dest=/etc/yum.repos.d/nodesource-el-6.repo
+          owner=root group=root mode=0444

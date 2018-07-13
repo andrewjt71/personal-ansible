@@ -1,0 +1,13 @@
+---
+- name: Download IUS release
+  get_url:
+    dest=/tmp/ius.rpm
+    timeout=10
+    url=https://centos7.iuscommunity.org/ius-release.rpm
+    validate_certs=true
+
+- name: Install EPEL release
+  package: name=epel-release state=latest
+
+- name: Install IUS release
+  package: name=/tmp/ius.rpm state=installed

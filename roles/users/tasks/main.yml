@@ -1,0 +1,31 @@
+- group:
+    name: personal-site-app
+    state: present
+
+- name: creating personal-site-app user
+  user:
+    name: personal-site-app
+    shell: /bin/bash
+    group: personal-site-app
+
+- name: creating nginx group
+  group:
+    name: nginx
+    state: present
+
+- name: creating nginx user
+  user:
+    name: nginx
+    shell: /bin/bash
+    group: nginx
+
+- name: crating personal-site-app-fpm group
+  group:
+    name: personal-site-app-fpm
+    state: present
+
+- name: creating personal-site-app-fpm user
+  user:
+    name: personal-site-app-fpm
+    shell: /bin/bash
+    group: personal-site-app-fpm

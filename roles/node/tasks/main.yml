@@ -1,0 +1,6 @@
+- include: setup-nodesource.yml
+
+- name: 'install nodejs'
+  package:
+    name: 'nodejs'
+    state: 'installed'

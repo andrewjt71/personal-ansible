@@ -1,0 +1,14 @@
+- name: create /opt/sites directory
+  file: dest=/opt/sites/ state=directory owner=personal-site-app group=personal-site-app
+  sudo: yes
+  sudo_user: root
+
+- name: create /var/cache/personal-site-app/cache directory
+  file: dest=/var/cache/personal-site-app/ state=directory owner=personal-site-app-fpm group=personal-site-app-fpm
+  sudo: yes
+  sudo_user: root
+
+- name: create /var/log/personal-site-app/log directory
+  file: dest=/var/log/personal-site-app/ state=directory owner=personal-site-app-fpm group=personal-site-app-fpm
+  sudo: yes
+  sudo_user: root

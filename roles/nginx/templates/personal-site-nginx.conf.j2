@@ -1,0 +1,54 @@
+#server {
+#    listen 80;
+#
+#    root /opt/sites/personal-website/public;
+#    index index.php index.html index.htm;
+#
+#    server_name codeymccodeface.local;
+#
+#    location / {
+#        try_files $uri $uri/ /index.php?$query_string;
+#    }
+#
+#    error_page 404 /404.html;
+#    error_page 500 502 503 504 /50x.html;
+#
+#    location ~ \.php$ {
+#        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+#        fastcgi_pass unix:/tmp/php-fpm-personal-site-app.sock;
+#        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#        include fastcgi_params;
+#    }
+#}
+
+server {
+    server_name codeymccodeface.local;
+    root /opt/sites/personal-website/public;
+
+    location / {
+        # try to serve file directly, fallback to index.php
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index\.php(/|$) {
+        fastcgi_pass unix:/var/run/php-fpm/php-fpm-personal-site-app.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        # Prevents URIs that include the front controller. This will 404:
+        # http://domain.tld/index.php/some-path
+        # Remove the internal directive to allow URIs like this
+        internal;
+    }
+
+    # return 404 for all other php files not matching the front controller
+    # this prevents access to other php files you don't want to be accessible.
+    location ~ \.php$ {
+        return 404;
+    }
+
+    error_log /var/log/nginx/project_error.log;
+    access_log /var/log/nginx/project_access.log;
+}
