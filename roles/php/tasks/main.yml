@@ -2,22 +2,31 @@
   package: name={{ item }} state=present
   with_items: "{{ php_packages }}"
   tags: php
-#
-- name: Install Xdebug package
-  package: name="{{ xdebug_package }}"
-  when: install_xdebug
 
-- name: copy xdebug.ini
-  template: src=xdebug.ini.j2 dest=/etc/php.d/15-xdebug.ini
-  when: install_xdebug
-
-- name: Install php.ini file
-  template: dest=/etc/php.ini group=root mode=0644  owner=root src=php.ini.j2
-  tags: php
+#- name: Install Xdebug package
+#  package: name="{{ xdebug_package }}"
+#  when: install_xdebug
 
 - name: Install FPM module
   package: name={{ php_fpm_package }} state=present
-  when: install_php_fpm
   tags: fpm
 
-- include: config-fpm.yml
+- lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: '^listen = 127.0.0.1:9000'
+    line: 'listen = /run/php-fpm/www.sock'
+
+- name: update php-fpm user
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: '^listen.owner ='
+    line: 'listen.owner = nginx'
+
+- name: update php-fpm group
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: '^listen.group ='
+    line: 'listen.group = nginx'
+  notify:
+    - PHP-FPM
+    - NGINX

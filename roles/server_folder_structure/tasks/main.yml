@@ -1,0 +1,45 @@
+- name: create /var/www directory
+  file: dest=/var/www/ state=directory owner=root group=root
+  become: true
+  become_user: root
+
+- name: create /var/www/prod directory
+  file: dest=/var/www/prod state=directory owner=root group=root
+  become: true
+  become_user: root
+
+- name: create /var/www/staging directory
+  file: dest=/var/www/staging state=directory owner=root group=root
+  become: true
+  become_user: root
+  when: prov_env == 'production'
+
+#- name: permissions on codebase - deploy user # use default perms - 755 for folders and 644 for files
+#  file:
+#    path: /var/www/prod/personal-website
+#    owner: deploy
+#    group: deploy
+#    recurse: true
+#  become: true
+#  become_user: root
+#  when: prov_env == 'vm'
+
+#- name: permissions on cache - fpm user # use default perms - 755 for folders and 644 for files
+#  file:
+#    path: /var/www/prod/personal-website/var/cache
+#    owner: php-fpm
+#    group: php-fpm
+#    recurse: true
+#  become: true
+#  become_user: root
+#  when: prov_env == 'vm'
+#
+#- name: permissions on logs - fpm user # use default perms - 755 for folders and 644 for files
+#  file:
+#    path: /var/www/prod/personal-website/var/log
+#    owner: php-fpm
+#    group: php-fpm
+#    recurse: true
+#  become: true
+#  become_user: root
+#  when: prov_env == 'vm'

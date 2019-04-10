@@ -1,31 +1,16 @@
-- group:
-    name: personal-site-app
-    state: present
+- include_vars: vars/production.yml
+  when: prov_env == 'production'
 
-- name: creating personal-site-app user
-  user:
-    name: personal-site-app
-    shell: /bin/bash
-    group: personal-site-app
+- include_vars: vars/vm.yml
+  when: prov_env == 'vm'
 
-- name: creating nginx group
+- name: creating deploy group
   group:
-    name: nginx
+    name: deploy
     state: present
 
-- name: creating nginx user
+- name: creating deploy user
   user:
-    name: nginx
+    name: deploy
     shell: /bin/bash
-    group: nginx
-
-- name: crating personal-site-app-fpm group
-  group:
-    name: personal-site-app-fpm
-    state: present
-
-- name: creating personal-site-app-fpm user
-  user:
-    name: personal-site-app-fpm
-    shell: /bin/bash
-    group: personal-site-app-fpm
+    groups: '{{ user_groups_for_deploy }}'

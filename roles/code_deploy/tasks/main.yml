@@ -1,0 +1,82 @@
+# PRODUCTION DEPLOYMENT
+- name: Delete staging directory
+  file:
+      state: absent
+      path: /var/www/staging/
+  when: prov_env == 'production'
+
+- name: create /var/www/staging directory
+  file: dest=/var/www/staging state=directory owner=deploy group=deploy
+  become: true
+  become_user: root
+  when: prov_env == 'production'
+
+- name: Clone git repository
+  git: >
+      dest=/var/www/staging/personal-website
+      repo=git@github.com:andrewjt71/personal-website.git
+      update=no
+      key_file=~/.ssh/personalsitedeploy
+  become: true
+  become_user: deploy
+  register: cloned
+  when: prov_env == 'production'
+
+- name: build app in staging
+  shell: cd /var/www/staging/personal-website && ./bin/deploy
+  become: true
+  become_user: deploy
+  when: prov_env == 'production'
+
+- name: permissions on codebase - root # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/staging/personal-website
+      owner: root
+      group: root
+      recurse: true
+  when: prov_env == 'production'
+
+- name: permissions on cache - php-fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/staging/personal-website
+      owner: php-fpm
+      group: php-fpm
+      recurse: true
+  when: prov_env == 'production'
+
+- name: permissions on logs - php-fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/staging/personal-website
+      owner: php-fpm
+      group: php-fpm
+      recurse: true
+  when: prov_env == 'production'
+
+- name: rsync app to production folder
+  shell: rsync --archive --delete /var/www/staging/personal-website /var/www/prod
+  become: true
+  become_user: root
+  when: prov_env == 'production'
+
+- name: permissions on cache - fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/personal-website/var/cache
+      owner: php-fpm
+      group: php-fpm
+      recurse: true
+  when: prov_env == 'production'
+
+- name: permissions on logs - fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/personal-website/var/log
+      owner: php-fpm
+      group: php-fpm
+      recurse: true
+  when: prov_env == 'production'
+
+# VM DEPLOYMENT
+- name: Deploy app
+  shell: cd /var/www/prod/personal-website && ./bin/deploy
+  become: true
+  become_user: deploy
+  when: prov_env == 'vm'

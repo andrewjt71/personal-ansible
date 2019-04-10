@@ -1,0 +1,5 @@
+- name: Deploy to Production Server
+  hosts: all
+  roles:
+      - { name: code_deploy_keys }
+      - { name: code_deploy, prov_env: production }

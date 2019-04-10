@@ -1,6 +1,6 @@
 server {
-    server_name codeymccodeface.local;
-    root /opt/sites/personal-website/public;
+    server_name personal-website.local;
+    root /var/www/prod/personal-website/public;
 
     location / {
         # try to serve file directly, fallback to index.php
@@ -8,7 +8,7 @@ server {
     }
 
     location ~ ^/index\.php(/|$) {
-        fastcgi_pass unix:/var/run/php-fpm/php-fpm-personal-site-app.sock;
+        fastcgi_pass unix:/run/php-fpm/www.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
 

@@ -18,5 +18,5 @@ Vagrant.configure("2") do |config|
     config.vm.network :private_network, ip: "192.168.33.99"
     config.ssh.forward_agent = false
 
-    config.vm.synced_folder '/Users/andrewtaylor/Code/personal-website', '/opt/sites/personal-website', nfs:true
+    #config.vm.synced_folder '/Users/andrewtaylor/Code/personal-website', '/var/www/prod/personal-website', nfs:true
 end

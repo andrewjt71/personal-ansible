@@ -1,0 +1,13 @@
+- name: Create Production Server
+  hosts: all
+  roles:
+    - { name: repos }
+    - { name: git }
+    - { name: node }
+    - { name: php, install_xdebug: no }
+    - { name: users, prov_env: production}
+    - { name: server_folder_structure, prov_env: production }
+    - { name: nginx }
+    - { name: code_deploy_keys }
+    - { name: code_deploy, prov_env: production }
+    - { name: selinux }
