@@ -1,4 +1,4 @@
-- include: setup-nodesource.yml
+- import_tasks: setup-nodesource.yml
 
 - name: 'install nodejs'
   package:

@@ -3,9 +3,9 @@
   with_items: "{{ php_packages }}"
   tags: php
 
-#- name: Install Xdebug package
-#  package: name="{{ xdebug_package }}"
-#  when: install_xdebug
+- name: Install Xdebug package
+  package: name="{{ xdebug_package }}"
+  when: install_xdebug
 
 - name: Install FPM module
   package: name={{ php_fpm_package }} state=present
@@ -27,6 +27,23 @@
     path: /etc/php-fpm.d/www.conf
     regexp: '^listen.group ='
     line: 'listen.group = nginx'
+  notify:
+    - PHP-FPM
+    - NGINX
+
+- name: including prod vars
+  include_vars: vars/production.yml
+  when: prov_env == 'production'
+
+- name: including vm vars
+  include_vars: vars/vm.yml
+  when: prov_env == 'vm'
+
+- name: update php-fpm group
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: 'env["APP_ENV"] ='
+    line: 'env["APP_ENV"] = "{{ app_env }}"'
   notify:
     - PHP-FPM
     - NGINX

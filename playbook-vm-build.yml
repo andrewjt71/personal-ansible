@@ -4,7 +4,7 @@
     - { name: repos }
     - { name: git }
     - { name: node }
-    - { name: php, install_xdebug: no }
+    - { name: php, install_xdebug: no, prov_env: production }
     - { name: users, prov_env: vm }
     - { name: server_folder_structure }
     - { name: nginx }
