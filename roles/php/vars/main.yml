@@ -20,3 +20,5 @@ php_packages:
 
 xdebug_package: php72u-xdebug
 php_fpm_package: php72u-fpm
+
+prop_env: vm

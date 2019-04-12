@@ -33,7 +33,7 @@ vagrant up
 Deploy
 
 ``` bash
-./build_vm.sh
+./bin/build_vm.sh
 ```
 
 ## Production
@@ -56,7 +56,7 @@ https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys
 Deploy
 
 ``` bash
-./build_prod.sh
+./bin/build_prod.sh
 ```
 
 ### Test production build on VM
@@ -81,7 +81,7 @@ https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys
 Deploy
 
 ``` bash
-./deploy_prod_vm.sh
+./bin/deploy_prod_vm.sh
 ```
 
 ## Deploying
@@ -90,7 +90,7 @@ Deploy
 Deploy
 
 ``` bash
-./deploy_vm.sh
+./bin/deploy_vm.sh
 ```
 
 ### Production
@@ -98,7 +98,7 @@ Deploy
 Deploy
 
 ``` bash
-./deploy_prod.sh
+./bin/deploy_prod.sh
 ```
 
 ## Permissions Explained

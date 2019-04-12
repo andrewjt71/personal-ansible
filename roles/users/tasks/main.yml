@@ -1,7 +1,9 @@
-- include_vars: vars/production.yml
+- name: including prod vars
+  include_vars: vars/production.yml
   when: prov_env == 'production'
 
-- include_vars: vars/vm.yml
+- name: including vm vars
+  include_vars: vars/vm.yml
   when: prov_env == 'vm'
 
 - name: creating deploy group
