@@ -2,34 +2,127 @@
 
 A basic Ansible Playbook project to provision VMs / servers for PHP projects
 
-## VM Provisioning
+## Building / Provisioning
+
+### VM
+
+Clone Ansible Repo
 
 ``` bash
-vagrant up
+git clone git@github.com:andrewjt71/personal-ansible.git
+```
+
+Clone site
+
+``` bash
+git clone git@github.com:andrewjt71/personal-website.git
+```
+
+Generate vagrant key
+
+``` bash
 ssh-add ~/.vagrant.d/insecure_private_key
-ansible-playbook playbook-vm.yml --private-key=/Users/.../.vagrant.d/insecure_private_key --become --become-user root --user vagrant
-Vagrant ssh
-sudo su - personal-site-app
-cd /opt/sites/personal-website/
-./bin/deploy
 ```
 
-## Live Provisioning: 
+Boot up the VM
+
+```bash
+vagrant up
+```
+
+Deploy
 
 ``` bash
-ansible-playbook playbook-live.yml --private-key=/Users/.../.ssh/deploy_key --become --become-user root
+./build_vm.sh
 ```
 
-## Permissions
-runtime:
-nginx runs as nginx
-php-fpm runs as a app fpm user (mywebfpm)
+## Production
 
-connections/socks:
-php-fpm socket file is owned by nginx so nginx has access to it, or: if not using sock file and instead using a port (e.g. 127.0.0.1:9000) then nginx needs access to this, easy since its localhost
+Clone Ansible Repo
 
-directory permissions:
-php-fpm user (mywebfpm) needs read/write access to app cache and app log directories
-the entire app folder which is "immutable" (e.g. deploy, nothing will ever change it) should be owned by root. lock everyone out
-if we need to run stuff like assetic dump (nooo) then either 1) change ownership of the entire app folder to 'mywebapp' and run the commands as that, or 2) change ownership of individual folders, e.g. mywebapp has write access to ./web/assets
-fpm only needs read access to code dir
+``` bash
+git clone git@github.com:andrewjt71/personal-ansible.git
+```
+
+Generate a deployment key - call it personalsitedeploy
+
+``` bash
+ssh-keygen
+```
+
+Add deployment key to website's github project with write access
+https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys
+
+Deploy
+
+``` bash
+./build_prod.sh
+```
+
+### Test production build on VM
+
+Generate a deployment key - call it personalsitedeploy
+
+``` bash
+ssh-keygen
+```
+
+Comment out the `config.vm.synced_folder` line in the Vagrantfile
+
+Boot up the VM
+
+```bash
+vagrant up
+```
+
+Add deployment key to website's github project with write access
+https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys
+
+Deploy
+
+``` bash
+./deploy_prod_vm.sh
+```
+
+## Deploying
+
+### VM
+Deploy
+
+``` bash
+./deploy_vm.sh
+```
+
+### Production
+
+Deploy
+
+``` bash
+./deploy_prod.sh
+```
+
+## Permissions Explained
+
+### VM
+
+- Nginx runs as nginx user
+- FPM runs as php-fpm user (listen.owner and listen.group are set to nginx in /etc/php-fpm.d/www.conf)
+- php-fpm user / group owns the cache and log dirs
+- deploy user owns the code folders, and should be used for composer installs, git clones, npm installs etc
+- deploy user is in the php-fpm group, and therefore can write to cache / logs where necessary e.g. composer install
+
+### Prod
+
+- Nginx runs as nginx user
+- FPM runs as php-fpm user (listen.owner and listen.group are set to nginx in /etc/php-fpm.d/www.conf)
+- php-fpm user / group owns the cache and log dirs
+- root owns the code folders as they should never be written to. The deployment and runtime processes have been separated
+- deploy user is used to clone the github repo and build code from within the staging folder which it is the owner for.
+Once generated, the permissions on the generated code are switched to root, and the contents are rsynched into the 
+directory which live points to. No manual build steps should ever be run on the code in the live folder.
+
+
+### Upgrading node
+
+https://github.com/boxuk/ansible-boxuk-roles-common/blob/master/roles/yum_repo/templates/nodesource-el-7.repo.j2
+https://github.com/boxuk/ansible-boxuk-roles-common/blob/master/roles/yum_repo/templates/nodesource-el-0.12.repo.j2

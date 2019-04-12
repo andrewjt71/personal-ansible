@@ -1,0 +1,4 @@
+- name: Deploy to VM
+  hosts: all
+  roles:
+      - { name: code_deploy, prov_env: vm }

@@ -1,3 +1,5 @@
----
 - name: PHP-FPM
   service: enabled=true name=php-fpm state=restarted
+
+- name: NGINX
+  service: enabled=true name=nginx state=restarted

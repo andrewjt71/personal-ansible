@@ -1,0 +1,12 @@
+- name: Create VM
+  hosts: all
+  roles:
+    - { name: repos }
+    - { name: git }
+    - { name: node }
+    - { name: php, install_xdebug: no }
+    - { name: users, prov_env: vm }
+    - { name: server_folder_structure }
+    - { name: nginx }
+    - { name: code_deploy, prov_env: vm }
+    - { name: selinux }

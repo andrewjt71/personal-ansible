@@ -1,0 +1,20 @@
+- name: permissions on logs - fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/personal-website/
+      owner: deploy
+      group: deploy
+      recurse: true
+
+- name: permissions on cache - fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/personal-website/var/cache
+      owner: php-fpm
+      group: php-fpm
+      recurse: true
+
+- name: permissions on logs - fpm # use default perms - 755 for folders and 644 for files
+  file:
+      path: /var/www/personal-website/var/log
+      owner: php-fpm
+      group: php-fpm
+      recurse: true

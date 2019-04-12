@@ -1,0 +1,20 @@
+
+- name: create ssh
+  file: dest=~/.ssh state=directory owner=deploy group=deploy mode=0700 #/home/deploy/.ssh
+  become: true
+  become_user: deploy
+
+- name: put deployment key onto server
+  copy: src=/Users/andrewtaylor/.ssh/personalsitedeploy dest=~/.ssh/personalsitedeploy owner=deploy mode=0600
+  become: true
+  become_user: deploy
+
+- name: create known hosts
+  file: dest=~/.ssh/known_hosts state=touch owner=deploy group=deploy mode=0600
+  become: true
+  become_user: deploy
+
+- name: ssh-keyscan the git server #https://github.com/ansible/ansible/issues/7474
+  shell: ssh-keyscan github.com >> ~/.ssh/known_hosts
+  become: true
+  become_user: deploy
