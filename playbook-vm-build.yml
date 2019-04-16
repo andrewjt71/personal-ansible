@@ -1,5 +1,5 @@
 - name: Create VM
-  hosts: all
+  hosts: 192.168.33.99
   roles:
     - { name: repos }
     - { name: git }

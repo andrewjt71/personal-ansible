@@ -1,4 +1,4 @@
 - name: Deploy to VM
-  hosts: all
+  hosts: 192.168.33.99
   roles:
       - { name: code_deploy, prov_env: vm }

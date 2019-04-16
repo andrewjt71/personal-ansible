@@ -44,7 +44,7 @@ Clone Ansible Repo
 git clone git@github.com:andrewjt71/personal-ansible.git
 ```
 
-Generate a deployment key - call it personalsitedeploy
+Generate a deployment key - call it personalsitedeploy. This will be used for communication with Github
 
 ``` bash
 ssh-keygen
@@ -52,6 +52,14 @@ ssh-keygen
 
 Add deployment key to website's github project with write access
 https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys
+
+Generate a deployment key - call it digitalocean. This will be used for communication with Digital Ocean
+
+``` bash
+ssh-keygen
+```
+
+Add ssh key to Digital Ocean droplet during creation
 
 Deploy
 
@@ -68,6 +76,8 @@ ssh-keygen
 ```
 
 Comment out the `config.vm.synced_folder` line in the Vagrantfile
+
+Modify playbook-production-build.yml setting the host to `192.168.33.99`
 
 Boot up the VM
 

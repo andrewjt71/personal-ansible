@@ -1,2 +1,3 @@
 [php]
 192.168.33.99 ansible_ssh_user=vagrant
+165.22.138.4 ansible_ssh_user=root
