@@ -1,5 +1,5 @@
 - name: Deploy to Production Server
-  hosts: 157.230.169.49
+  hosts: 157.230.139.188
   roles:
       - { name: code_deploy_keys }
       - { name: code_deploy, prov_env: production }

@@ -36,6 +36,8 @@ Deploy
 ./bin/build_vm.sh
 ```
 
+Enter the site URL when prompted
+
 ## Production
 
 Clone Ansible Repo
@@ -61,11 +63,15 @@ ssh-keygen
 
 Add ssh key to Digital Ocean droplet during creation
 
+Update the IP in the `hosts` file and the `playbook-production-build.yml` file appropriately 
+
 Deploy
 
 ``` bash
 ./bin/build_prod.sh
 ```
+
+Enter the site URL when prompted
 
 ### Test production build on VM
 
@@ -97,6 +103,7 @@ Deploy
 ## Deploying
 
 ### VM
+
 Deploy
 
 ``` bash
