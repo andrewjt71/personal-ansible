@@ -1,5 +1,5 @@
 - name: Create Production Server
-  hosts: 165.22.138.4
+  hosts: 157.230.139.188
   roles:
     - { name: repos }
     - { name: git }
@@ -11,3 +11,7 @@
     - { name: code_deploy_keys }
     - { name: code_deploy, prov_env: production }
     - { name: selinux }
+  vars_prompt:
+    - name: "site_url"
+      prompt: "What is the site url?"
+      private: false

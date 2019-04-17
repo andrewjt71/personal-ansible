@@ -10,3 +10,7 @@
     - { name: nginx }
     - { name: code_deploy, prov_env: vm }
     - { name: selinux }
+  vars_prompt:
+    - name: "site_url"
+      prompt: "What is the site url?"
+      private: false

@@ -58,22 +58,6 @@
   become_user: root
   when: prov_env == 'production'
 
-- name: permissions on cache - fpm # use default perms - 755 for folders and 644 for files
-  file:
-      path: /var/www/personal-website/var/cache
-      owner: php-fpm
-      group: php-fpm
-      recurse: true
-  when: prov_env == 'production'
-
-- name: permissions on logs - fpm # use default perms - 755 for folders and 644 for files
-  file:
-      path: /var/www/personal-website/var/log
-      owner: php-fpm
-      group: php-fpm
-      recurse: true
-  when: prov_env == 'production'
-
 # VM DEPLOYMENT
 - name: Deploy app
   shell: cd /var/www/prod/personal-website && ./bin/deploy
