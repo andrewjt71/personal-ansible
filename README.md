@@ -46,7 +46,7 @@ Clone Ansible Repo
 git clone git@github.com:andrewjt71/personal-ansible.git
 ```
 
-Generate a deployment key - call it personalsitedeploy. This will be used for communication with Github
+Generate a deployment key - call it personalsitegitdeploy. This will be used for communication with Github
 
 ``` bash
 ssh-keygen
@@ -75,7 +75,7 @@ Enter the site URL when prompted
 
 ### Test production build on VM
 
-Generate a deployment key - call it personalsitedeploy
+Generate a deployment key - call it personalsitegitdeploy
 
 ``` bash
 ssh-keygen
