@@ -16,7 +16,7 @@
       dest=/var/www/staging/personal-website
       repo=git@github.com:andrewjt71/personal-website.git
       update=no
-      key_file=~/.ssh/personalsitedeploy
+      key_file=~/.ssh/personalsitegitdeploy
   become: true
   become_user: deploy
   register: cloned

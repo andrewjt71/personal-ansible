@@ -5,7 +5,7 @@
   become_user: deploy
 
 - name: put deployment key onto server
-  copy: src=/Users/andrewtaylor/.ssh/personalsitedeploy dest=~/.ssh/personalsitedeploy owner=deploy mode=0600
+  copy: src=/Users/andrewtaylor/.ssh/personalsitegitdeploy dest=~/.ssh/personalsitegitdeploy owner=deploy mode=0600
   become: true
   become_user: deploy
 
