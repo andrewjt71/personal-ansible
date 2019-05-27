@@ -1,5 +1,4 @@
 - name: Deploy to Production Server
-  hosts: 178.128.39.186
+  hosts: codeymccodeface.co.uk
   roles:
-      - { name: code_deploy_keys }
       - { name: code_deploy, prov_env: production }
