@@ -1,5 +1,5 @@
 - name: Create Production Server
-  hosts: 178.128.39.186
+  hosts: codeymccodeface.co.uk
   roles:
     - { name: repos }
     - { name: git }
@@ -8,8 +8,7 @@
     - { name: users, prov_env: production}
     - { name: server_folder_structure, prov_env: production }
     - { name: nginx }
-    - { name: code_deploy_keys }
-    - { name: code_deploy, prov_env: production }
+    - { name: ssh_access }
     - { name: selinux }
   vars_prompt:
     - name: "site_url"
